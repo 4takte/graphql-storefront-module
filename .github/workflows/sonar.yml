@@ -54,7 +54,7 @@ jobs:
                       -Dsonar.organization=oxid-esales
                       -Dsonar.projectKey=OXID-eSales_graphql-storefront-module
                       -Dsonar.sources=src
-                      -Dsonar.tests=Tests
+                      -Dsonar.tests=tests
                       -Dsonar.sourceEncoding=UTF-8
                       -Dsonar.cpd.php.minimumTokens=10
                       -Dsonar.cpd.php.minimumLines=5
