@@ -1,0 +1,66 @@
+name: Sonar
+
+on:
+    - push
+    - pull_request
+
+env:
+    DEFAULT_COMPOSER_FLAGS: --no-interaction --no-ansi --no-progress --no-suggest --prefer-dist --no-plugins
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php:
+                    - "7.4"
+
+        steps:
+            - name: Checkout graphql-storefront
+              uses: actions/checkout@v2
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  coverage: xdebug
+                  extensions: gd, zip
+
+
+            - name: Get composer cache directory
+              id: composer-cache
+              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            - name: Cache dependencies
+              uses: actions/cache@v2
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: ${{ runner.os }}-composer-
+
+            - name: Install dependencies
+              run: composer update $DEFAULT_COMPOSER_FLAGS
+
+            - name: Generated Unified Namespace
+              run: ./vendor/bin/oe-eshop-unified_namespace_generator
+
+            - name: Unit Tests
+              run: |
+                  vendor/bin/phpunit -c tests/phpunit.xml tests/Unit/ --coverage-clover clover.xml
+                  sed -i 's/\/home\/runner\/work\/graphql-storefront-module\/graphql-storefront-module\///' clover.xml
+
+            - name: SonarCloud Scan
+              uses: sonarsource/sonarcloud-github-action@master
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+              with:
+                  args: >
+                      -Dsonar.organization=oxid-esales
+                      -Dsonar.projectKey=OXID-eSales_graphql-storefront-module
+                      -Dsonar.sources=src
+                      -Dsonar.tests=Tests
+                      -Dsonar.sourceEncoding=UTF-8
+                      -Dsonar.php.coverage.reportPaths=clover.xml
+                      -Dsonar.cpd.php.minimumTokens=10
+                      -Dsonar.cpd.php.minimumLines=5
