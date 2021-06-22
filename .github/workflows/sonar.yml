@@ -76,6 +76,10 @@ jobs:
                   docker-compose exec -T --user oxid php composer require codeception/c3 --dev
                   sed -i 's/<?php/<?php\n\nrequire(__DIR__ . "\/..\/c3.php");/' source/bootstrap.php
                   docker-compose exec -T --user oxid php vendor/bin/codecept -c vendor/oxid-esales/graphql-storefront/tests/ run --coverage-xml --group=wip
+
+            - name: Fix codeception coverage report
+              run: |
+                  cd /home/runner/work/docker-eshop-sdk/data/oxideshop/
                   sed -i 's/\/var\/www\/oxideshop\/graphql-storefront-module\///' vendor/oxid-esales/graphql-storefront/tests/Codeception/_output/OxidEsales.GraphQL.Storefront.Tests.Codeception.acceptance.remote.coverage.xml
                   cp vendor/oxid-esales/graphql-storefront/tests/Codeception/_output/OxidEsales.GraphQL.Storefront.Tests.Codeception.acceptance.remote.coverage.xml $GITHUB_WORKSPACE/coverage.xml
 
