@@ -58,6 +58,7 @@ jobs:
                   make data/oxideshop/source/config.inc.php
                   docker-compose up -d php
                   sleep 10
+                  mkdir $GITHUB_WORKSPACE/artifact
                   make reset-db
 
             - name: Prepare shop and run codeception in docker
@@ -81,17 +82,17 @@ jobs:
               run: |
                   cd /home/runner/work/docker-eshop-sdk/data/oxideshop/
                   sed -i 's/\/var\/www\/oxideshop\/graphql-storefront-module\/src\///' vendor/oxid-esales/graphql-storefront/tests/Codeception/_output/OxidEsales.GraphQL.Storefront.Tests.Codeception.acceptance.remote.coverage.xml
-                  echo $GITHUB_WORKSPACE
-                  mkdir $GITHUB_WORKSPACE/artifact
                   cp vendor/oxid-esales/graphql-storefront/tests/Codeception/_output/OxidEsales.GraphQL.Storefront.Tests.Codeception.acceptance.remote.coverage.xml $GITHUB_WORKSPACE/artifact/coverage.xml
                   ls $GITHUB_WORKSPACE/artifact/
 
             - name: Unit Tests
               continue-on-error: true
               run: |
-                  vendor/bin/phpunit -c tests/phpunit.xml tests/Unit/ --coverage-clover $GITHUB_WORKSPACE/artifact/clover.xml
+                  cd /home/runner/work/docker-eshop-sdk/data/oxideshop/
+                  vendor/bin/phpunit -c tests/phpunit.xml vendor/oxid-esales/graphql-storefront/tests/ --coverage-clover $GITHUB_WORKSPACE/artifact/clover.xml
 
             - name: Fix unit test coverage report
+              continue-on-error: true
               run: |
                   ls -alh
                   sed -i 's/\/home\/runner\/work\/graphql-storefront-module\/graphql-storefront-module\///' $GITHUB_WORKSPACE/artifact/clover.xml
