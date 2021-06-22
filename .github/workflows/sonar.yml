@@ -80,6 +80,7 @@ jobs:
                   cp vendor/oxid-esales/graphql-storefront/tests/Codeception/_output/OxidEsales.GraphQL.Storefront.Tests.Codeception.acceptance.remote.coverage.xml $GITHUB_WORKSPACE/coverage.xml
 
             - name: Unit Tests
+              continue-on-error: true
               run: |
                   vendor/bin/phpunit -c tests/phpunit.xml tests/Unit/ --coverage-clover clover.xml
                   sed -i 's/\/home\/runner\/work\/graphql-storefront-module\/graphql-storefront-module\///' clover.xml
