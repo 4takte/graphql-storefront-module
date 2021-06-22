@@ -87,7 +87,7 @@ jobs:
               uses: actions/upload-artifact@v2
               with:
                   name: codeception-coverage-report
-                  path: $GITHUB_WORKSPACE/coverage.xml
+                  path: vendor/oxid-esales/graphql-storefront/tests/Codeception/_output
 
             - name: Unit Tests
               continue-on-error: true
