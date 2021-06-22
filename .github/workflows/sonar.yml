@@ -115,6 +115,6 @@ jobs:
                       -Dsonar.sources=src
                       -Dsonar.tests=tests
                       -Dsonar.sourceEncoding=UTF-8
-                      -Dsonar.php.coverage.reportPaths=/home/runner/work/graphql-storefront-module/graphql-storefront-module/artifact/coverage.xml
+                      -Dsonar.php.coverage.reportPaths=/home/runner/work/graphql-storefront-module/graphql-storefront-module/artifact/*.xml
                       -Dsonar.cpd.php.minimumTokens=10
                       -Dsonar.cpd.php.minimumLines=5
