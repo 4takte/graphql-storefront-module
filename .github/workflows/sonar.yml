@@ -81,7 +81,7 @@ jobs:
             - name: Fix codeception coverage report
               run: |
                   cd /home/runner/work/docker-eshop-sdk/data/oxideshop/
-                  sed -i 's/\/var\/www\/oxideshop\/graphql-storefront-module\///' vendor/oxid-esales/graphql-storefront/tests/Codeception/_output/OxidEsales.GraphQL.Storefront.Tests.Codeception.acceptance.remote.coverage.xml
+                  sed -i 's/\/var\/www\/oxideshop\/graphql-storefront-module\///' vendor/oxid-esales/graphql-storefront/tests/Codeception/_output/coverage.xml
                   cp vendor/oxid-esales/graphql-storefront/tests/Codeception/_output/coverage.xml $GITHUB_WORKSPACE/artifact/coverage.xml
                   ls $GITHUB_WORKSPACE/artifact/
 
