@@ -80,7 +80,7 @@ jobs:
             - name: Fix codeception coverage report
               run: |
                   cd /home/runner/work/docker-eshop-sdk/data/oxideshop/
-                  sed -i 's/\/var\/www\/oxideshop\/graphql-storefront-module\///' vendor/oxid-esales/graphql-storefront/tests/Codeception/_output/OxidEsales.GraphQL.Storefront.Tests.Codeception.acceptance.remote.coverage.xml
+                  sed -i 's/\/var\/www\/oxideshop\/graphql-storefront-module\/src\///' vendor/oxid-esales/graphql-storefront/tests/Codeception/_output/OxidEsales.GraphQL.Storefront.Tests.Codeception.acceptance.remote.coverage.xml
                   echo $GITHUB_WORKSPACE
                   mkdir $GITHUB_WORKSPACE/artifact
                   cp vendor/oxid-esales/graphql-storefront/tests/Codeception/_output/OxidEsales.GraphQL.Storefront.Tests.Codeception.acceptance.remote.coverage.xml $GITHUB_WORKSPACE/artifact/coverage.xml
@@ -90,6 +90,10 @@ jobs:
               continue-on-error: true
               run: |
                   vendor/bin/phpunit -c tests/phpunit.xml tests/Unit/ --coverage-clover clover.xml
+
+            - name: Fix unit test coverage report
+              run: |
+                  ls -alh
                   sed -i 's/\/home\/runner\/work\/graphql-storefront-module\/graphql-storefront-module\///' clover.xml
                   cp clover.xml /home/runner/work/graphql-storefront-module/graphql-storefront-module/artifact/
 
