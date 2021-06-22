@@ -91,7 +91,7 @@ jobs:
               run: |
                   vendor/bin/phpunit -c tests/phpunit.xml tests/Unit/ --coverage-clover clover.xml
                   sed -i 's/\/home\/runner\/work\/graphql-storefront-module\/graphql-storefront-module\///' clover.xml
-                  cp clover.xml $GITHUB_WORKSPACE/artifact/
+                  cp clover.xml /home/runner/work/graphql-storefront-module/graphql-storefront-module/artifact/
 
             - name: Archive code coverage results
               uses: actions/upload-artifact@v2
@@ -111,6 +111,6 @@ jobs:
                       -Dsonar.sources=src
                       -Dsonar.tests=tests
                       -Dsonar.sourceEncoding=UTF-8
-                      -Dsonar.php.coverage.reportPaths=$GITHUB_WORKSPACE/coverage.xml
+                      -Dsonar.php.coverage.reportPaths=/home/runner/work/graphql-storefront-module/graphql-storefront-module/artifact/coverage.xml
                       -Dsonar.cpd.php.minimumTokens=10
                       -Dsonar.cpd.php.minimumLines=5
