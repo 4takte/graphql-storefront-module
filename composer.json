@@ -16,7 +16,7 @@
     "require": {
         "php": "^7.3",
         "doctrine/dbal": "^v2.7",
-        "oxid-esales/graphql-base": "dev-master"
+        "oxid-esales/graphql-base": "dev-master-OXDEV-4738"
     },
     "conflict": {
         "oxid-esales/graphql-catalogue": "*",
