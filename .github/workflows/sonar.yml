@@ -90,12 +90,14 @@ jobs:
               run: |
                   cd /home/runner/work/docker-eshop-sdk/data/oxideshop/
                   mkdir $GITHUB_WORKSPACE/artifact/phpunit/
-                  docker-compose exec -T --user oxid php php vendor/bin/runtests /home/runner/work/docker-eshop-sdk/data/oxideshop/vendor/oxid-esales/graphql-storefront/tests --coverage-xml=$GITHUB_WORKSPACE/artifact/phpunit/
+                  docker-compose exec -T --user oxid php php /var/www/oxideshop/vendor/oxid-esales/graphql-storefront/tests --coverage-xml=/var/www/oxideshop/Coverage/
 
             - name: Fix unit test coverage report
               continue-on-error: true
               run: |
-                  ls -alh
+                  cp -R /home/runner/work/docker-eshop-sdk/data/oxideshop/Coverage $GITHUB_WORKSPACE/artifact/
+                  ls -alh $GITHUB_WORKSPACE/artifact/
+                  ls -alh $GITHUB_WORKSPACE/artifact/Coverage
                   sed -i 's/\/home\/runner\/work\/graphql-storefront-module\/graphql-storefront-module\///' $GITHUB_WORKSPACE/artifact/clover.xml
 
             - name: Archive code coverage results
