@@ -90,7 +90,7 @@ jobs:
               run: |
                   cd /home/runner/work/docker-eshop-sdk/data/oxideshop/
                   mkdir $GITHUB_WORKSPACE/artifact/phpunit/
-                  docker-compose exec -T --user oxid php php /var/www/oxideshop/vendor/oxid-esales/graphql-storefront/tests --coverage-xml=/var/www/oxideshop/Coverage/
+                  docker-compose exec -T --user oxid php php vendor/bin/runtests /var/www/oxideshop/vendor/oxid-esales/graphql-storefront/tests --coverage-xml=/var/www/oxideshop/Coverage/
 
             - name: Fix unit test coverage report
               continue-on-error: true
